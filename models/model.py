@@ -28,8 +28,8 @@ class BuildModel(tensorflow.keras.Model):
         self.text_output, _, _ = self.lstm(self.text_embed, initial_state = [self.hidden_state, self.cell_state])
 
         self.dense = Dense(vocab_length, activation='softmax')
-        self.output = self.dense(self.text_output)
+        self.final_output = self.dense(self.text_output)
 
-        super().__init__([self.image_input, self.text_input], self.output)
+        super().__init__([self.image_input, self.text_input], self.final_output)
 
 

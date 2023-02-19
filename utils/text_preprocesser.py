@@ -1,12 +1,12 @@
 import pandas as pd
 import numpy as np
-from config import *
+from utils.config import *
 import os
 import re
 import nltk
 nltk.download('punkt')
 from nltk.tokenize import word_tokenize
-import gensim
+from gensim.models import Word2Vec
 from keras.preprocessing.sequence import pad_sequences
 
 def clean_text(text):
@@ -33,8 +33,8 @@ def tokenize_with_tag(text):
   return text
 
 def word2vec(sentences):
-    w2v_model = gensim.models.Word2Vec(sentences=sentences,size=output_dim,window=10,min_count=1)
-    w2v_model = w2v_model.train(sentences,epochs=10,total_examples=len(sentences))
+    w2v_model = Word2Vec(sentences=sentences,size=output_dim,window=10,min_count=1)
+    w2v_model.train(sentences,epochs=10,total_examples=len(sentences))
     return w2v_model
 
 # create embedding matrix
@@ -45,7 +45,7 @@ def create_embed(w2v_model, op_dim, vocab, vocab_length):
         if word == '<END>':
             embed_matrix[i]=np.zeros(embed_dim)
         else:
-            embed_vector=w2v_model.get_vector(word)
+            embed_vector=w2v_model.wv.get_vector(word)
             embed_matrix[i]=embed_vector
     return embed_matrix
 
@@ -74,7 +74,7 @@ def preprocess():
             else:
                 vocab_dict[i] = 1
 
-    print(f"Total number of words in vocab are {len(w2v_model.vocab)}")
+    print(f"Total number of words in vocab are {len(w2v_model.wv.vocab)}")
 
     vocab = list(vocab_dict.keys())
     vocab_length = len(vocab)
@@ -91,13 +91,12 @@ def preprocess():
     max_ = 0
     for each in sentences:
         temp = []
-    for i in each:
-        temp.append(word_to_id[i])
-    if len(temp)>max_:
-        max_ = len(temp)
-    one_hot_sentences.append(temp)
+        for i in each:
+            temp.append(word_to_id[i])
+        if len(temp)>max_:
+            max_ = len(temp)
+        one_hot_sentences.append(temp)
     print(f"max_length: {max_}")
-    one_hot_sentences[:5]
     
     padded_one_hot = pad_sequences(one_hot_sentences, maxlen=max_length, padding='post')
 
@@ -108,13 +107,10 @@ def preprocess():
 
     decoder_answers = pad_sequences(decoder_answers, maxlen=max_length, padding='post')
 
-    df['padded_one_hot'] = list(padded_one_hot)
-    df['decoder_answers'] = list(decoder_answers)
+    df['padded_one_hot'] = padded_one_hot.tolist()
+    df['decoder_answers'] = decoder_answers.tolist()
 
-    final = df[['image_name','comment','padded_one_hot','decoder_answers']]
+    final = df[['image','comment','padded_one_hot','decoder_answers']]
 
-    return final, embed_matrix
-
-x, y = preprocess()
-print(x)                  
+    return final, embed_matrix, vocab_length      
 
