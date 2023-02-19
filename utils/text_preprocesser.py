@@ -112,5 +112,8 @@ def preprocess():
 
     final = df[['image','comment','padded_one_hot','decoder_answers']]
 
-    return final, embed_matrix, vocab_length      
+    return final, embed_matrix, vocab_length     
+
+if __name__ == '__main__':
+    final, embed_matrix, vocab_length = preprocess()
 
