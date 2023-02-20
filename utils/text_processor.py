@@ -21,24 +21,6 @@ class TextProcessor():
         self.id_to_word = {}
         self.max_ = 0
 
-
-    def clean_text(self,text):
-        self.text = text.lower()
-        self.text = re.sub(r"\'m", " am", self.text)
-        self.text = re.sub(r"\'s", " is", self.text)
-        self.text = re.sub(r"\'ll", " will", self.text)
-        self.text = re.sub(r"\'ve", " have", self.text)
-        self.text = re.sub(r"\'re", " are", self.text)
-        self.text = re.sub(r"\'d", " would", self.text)
-        self.text = re.sub(r" 'bout", " about", self.text)
-        self.text = re.sub(r"gonna", "going to", self.text)
-        self.text = re.sub(r"gotta", "got to", self.text)
-        self.text = re.sub(r"won't", "will not", self.text)
-        self.text = re.sub(r"can't", "can not", self.text)
-        self.text = re.sub(r"n't", " not", self.text)
-        self.text = re.sub(r"-"," ",self.text)
-        return self.text
-
     def tokenize_with_tag(self,text):
         self.text = word_tokenize(text)
         self.text.insert(0,'<START>')
@@ -62,7 +44,6 @@ class TextProcessor():
         return self.embed_matrix
 
     def preprocess(self):
-        self.df['comment'] = self.df['comment'].apply(self.clean_text)
         self.df['tokenize'] = self.df['comment'].apply(self.tokenize_with_tag)
         self.df['word_count'] = self.df['tokenize'].str.len()
         self.df = self.df[self.df['word_count'] <= self.max_length]
