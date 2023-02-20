@@ -1,6 +1,7 @@
-data_dir = "data" 
-max_length = 30
-output_dim = 300
-shape = (224, 224, 3)
-batch_size = 32
-epochs = 5
+DATA_DIR = "data"
+CAPTION_FILENAME = 'results.csv'
+MAX_LENGTH = 30
+OUTPUT_DIM = 300
+IMAGE_SHAPE = (224, 224, 3)
+BATCH_SIZE = 32
+EPOCHS = 5

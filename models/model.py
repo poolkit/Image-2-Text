@@ -1,5 +1,4 @@
 import tensorflow
-from tensorflow import keras
 from keras.layers import Input, Conv2D, Flatten, Dense, Embedding, LSTM, Dropout, Reshape, Concatenate, MaxPooling2D
 from keras.models import Model
 
