@@ -6,3 +6,4 @@ TRANSFER_MODEL = 'vgg16'
 IMAGE_SHAPE = (224, 224, 3)
 BATCH_SIZE = 32
 EPOCHS = 10
+TEST_DIR = "data/test/"

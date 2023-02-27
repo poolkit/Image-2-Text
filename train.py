@@ -66,7 +66,8 @@ class Trainer():
             with open( f"saved/image_feature_mapping_{self.transfer_model}.p", "wb" ) as f:
                 pickle.dump(image_feature_mapping, f )
         
-        model = BuildModel(self.transfer_model, self.max_length, text_process.vocab_length, self.output_dim, text_process.embed_matrix)
+        build_model = BuildModel(self.transfer_model, self.max_length, text_process.vocab_length, self.output_dim, text_process.embed_matrix)
+        model = build_model.create_model()
         model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['acc'])
 
         loading_batch = BatchLoader(df, image_feature_mapping, self.batch_size, self.max_length, text_process.vocab_length)
@@ -78,12 +79,16 @@ class Trainer():
         print(f"train_steps: {train_steps}")
         print(f"val_steps: {val_steps}")
 
+        with open('saved/objects.pkl', 'wb') as f: 
+            pickle.dump([text_process.word_to_id, text_process.id_to_word], f)
+
+
         print(f"{'*'*50} Starting the training {'*'*50}")
         history = model.fit(train_generator, steps_per_epoch=train_steps, 
                     epochs=self.epochs, validation_data=val_generator, validation_steps=val_steps, 
                     callbacks=self.save_checkpoints())
 
-        model.save(f"saved/model_{datetime.now().strftime('%H:%M')}.h5")
+        model.save(f"saved/model_{datetime.now().strftime('%H-%M')}.h5")
 
         return history
 
