@@ -1,7 +1,8 @@
-DATA_DIR = "data"
-CAPTION_FILENAME = 'results.csv'
-MAX_LENGTH = 30
-OUTPUT_DIM = 300
+IMAGE_DIR = "data/images/"
+CAPTION_FILENAME = 'data/captions.txt'
+MAX_LENGTH = 18
+OUTPUT_DIM = 256
+TRANSFER_MODEL = 'vgg16'
 IMAGE_SHAPE = (224, 224, 3)
 BATCH_SIZE = 32
 EPOCHS = 5
