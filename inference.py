@@ -15,10 +15,6 @@ from PIL import Image
 
 loaded_model = load_model("saved/model_23-57.h5")
 
-# loaded_model = load_model(("saved/model_23-13.h5"),
-#        custom_objects={'BuildModel': BuildModel})
-
-
 with open('saved/objects.pkl', 'rb') as f:  # Python 3: open(..., 'rb')
     word_to_id, id_to_word = pickle.load(f)
 
