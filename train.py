@@ -7,6 +7,7 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 import os
 import pickle
 import tensorflow
+from datetime import datetime
 tensorflow.config.run_functions_eagerly(True)
 
 
@@ -24,11 +25,11 @@ class Trainer():
 
     def save_checkpoints(self):
         # Define the file path for saving the model weights
-        self.checkpoint_filepath = 'saved/weights/model.{epoch:02d}-{acc:.2f}.h5'
+        self.checkpoint_filepath = 'saved/weights/model.{epoch:02d}-{val_acc:.2f}.h5'
         # Create a ModelCheckpoint callback that saves the best model weights based on validation accuracy
         self.checkpoint_callback = ModelCheckpoint(
             self.checkpoint_filepath,
-            monitor='acc',
+            monitor='val_acc',
             verbose=1,
             save_best_only=True,
             save_weights_only=True,
@@ -36,8 +37,8 @@ class Trainer():
         )
         # Create an EarlyStopping callback that stops training when validation accuracy reaches 0.95
         self.early_stopping_callback = EarlyStopping(
-            monitor='acc',
-            patience=5,
+            monitor='val_acc',
+            patience=10,
             verbose=1,
             mode='max',
             baseline=0.95
@@ -77,10 +78,12 @@ class Trainer():
         print(f"train_steps: {train_steps}")
         print(f"val_steps: {val_steps}")
 
-        print("**************************** Starting the training ****************************")
+        print(f"{'*'*50} Starting the training {'*'*50}")
         history = model.fit(train_generator, steps_per_epoch=train_steps, 
                     epochs=self.epochs, validation_data=val_generator, validation_steps=val_steps, 
                     callbacks=self.save_checkpoints())
+
+        model.save(f"saved/model_{datetime.now().strftime('%H:%M')}.h5")
 
         return history
 
