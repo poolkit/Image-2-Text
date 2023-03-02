@@ -32,7 +32,7 @@ pip install requirements.txt
 python train.py
 ```
 
-5. Finnaly, to generate captions for your test images, rum
+5. Finally, to generate captions for your test images, run
 
 ```sh
 python inference.py  --t "test image filepath"  --o "output folder filepath" --m "saved model path"
