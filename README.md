@@ -39,11 +39,9 @@ python inference.py  --t "test image filepath"  --o "output folder filepath" --m
 ```
 
 ### Results
-![](results/image1.jpg)
-![](results/image5.jpg)
-![](results/image4.jpg)
-![](results/image6.jpg)
-![](results/image2.jpg)
+<img src="results/image1.jpg" width=500px height=300px> <img src="results/image5.jpg" width=500px height=300px>
+<img src="results/image4.jpg" width=500px height=300px> <img src="results/image6.jpg" width=500px height=300px>
+<img src="results/image2.jpg" width=500px height=300px>
 
 ### Future Work
 Will add evaluation code for BLEU score and try Beam Search instead of Greedy Search
