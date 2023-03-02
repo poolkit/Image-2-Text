@@ -5,9 +5,11 @@ This repository contains the code for building an Image Captioning model using D
 
 ### Code Explaination
 - ``text_processor.py`` : This script takes captions csv file and processes the captions as required by the model.
-- ``image_loader.py`` : It loads all the image data in batches and yeilds a generator output.
+- ``image_processor.py`` : It creates a dictionary of image filenames mapped with their respective image feature vectors extracted from pre trained vgg16 or resnet50.
 - ``model.py`` : The architecture of model. The model initially takes image input and extracts the features, which is later fed to LSTM layer along with processed captions.
+- ``batch_loader.py`` : It loads all the image data along with caption with their respective targets in batches and yeilds a generator output.
 - ``train.py`` : The training of the model happens here. The input is given from another script ``config.py``.
+- ``inference.py`` : The caption generator code is here. Follow the below steps to generate captions for your own image
 
 ### Getting Started
 1. Clone the repository
@@ -16,7 +18,7 @@ This repository contains the code for building an Image Captioning model using D
 git clone https://github.com/poolkit/Image-2-Text.git
 ```
 
-2. Download the [Flickr30k](https://www.kaggle.com/datasets/hsankesara/flickr-image-dataset) dataset. Unzip the caption csv file and dump all the images and csv file into ``'data/'`` folder.
+2. Download the [Flickr30k](https://www.kaggle.com/datasets/hsankesara/flickr-image-dataset) dataset. Unzip it and add it into ``'data/'`` folder.
 
 3. Install all the required dependencies
 
@@ -24,10 +26,16 @@ git clone https://github.com/poolkit/Image-2-Text.git
 pip install requirements.txt
 ```
 
-4. To train the model, just run
+4. To train the model, just run. It will save your model in ``saved/`` folder.
 
 ```sh
 python train.py
+```
+
+5. Finnaly, to generate captions for your test images, rum
+
+```sh
+python inference.py  --t "test image filepath"  --o "output folder filepath" --m "saved model path"
 ```
 
 ### Results
