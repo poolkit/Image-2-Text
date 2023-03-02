@@ -18,7 +18,7 @@ This repository contains the code for building an Image Captioning model using D
 git clone https://github.com/poolkit/Image-2-Text.git
 ```
 
-2. Download the [Flickr30k](https://www.kaggle.com/datasets/hsankesara/flickr-image-dataset) dataset. Unzip it and add it into ``'data/'`` folder.
+2. Download the [Flickr8k](https://www.kaggle.com/datasets/adityajn105/flickr8k) dataset. Unzip it and add it into ``'data/'`` folder.
 
 3. Install all the required dependencies
 
