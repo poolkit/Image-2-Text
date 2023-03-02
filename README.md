@@ -44,3 +44,6 @@ python inference.py  --t "test image filepath"  --o "output folder filepath" --m
 ![](results/image4.jpg)
 ![](results/image6.jpg)
 ![](results/image2.jpg)
+
+### Future Work
+Will add evaluation code for BLEU score and try Beam Search instead of Greedy Search
