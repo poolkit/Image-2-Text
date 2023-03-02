@@ -11,9 +11,15 @@ from utils.image_processor import ImageProcessor
 from keras.preprocessing.sequence import pad_sequences
 import matplotlib.pyplot as plt
 from PIL import Image
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--t', dest='test_image', type=str, help='test image file path')
+parser.add_argument('--o', dest='output_folder', type=str, help='output folder path', default='results/')
+parser.add_argument('--m', dest='model_choice', type=str, help='pre trained model path', default='saved\model_resnet50_18-53.h5')
+args = parser.parse_args()
 
-loaded_model = load_model("saved/model_23-57.h5")
+loaded_model = load_model(args.model_choice)
 
 with open('saved/objects.pkl', 'rb') as f:  # Python 3: open(..., 'rb')
     word_to_id, id_to_word = pickle.load(f)
@@ -46,9 +52,11 @@ def generate_captions(filepath):
 
 if __name__ == '__main__':
 
-    test_image_path = "data/test/image6.jpg"
+    test_image_path = args.test_image
+    filename = test_image_path.split('/')[-1]
     generated_caption  = generate_captions(test_image_path)
     test_image = Image.open(test_image_path)
     plt.imshow(test_image)
     plt.title(generated_caption)
+    plt.savefig(f'{args.output_folder}{filename}')
     plt.show()

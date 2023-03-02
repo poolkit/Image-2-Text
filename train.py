@@ -88,7 +88,7 @@ class Trainer():
                     epochs=self.epochs, validation_data=val_generator, validation_steps=val_steps, 
                     callbacks=self.save_checkpoints())
 
-        model.save(f"saved/model_{datetime.now().strftime('%H-%M')}.h5")
+        model.save(f"saved/model_{self.transfer_model}_{datetime.now().strftime('%H-%M')}.h5")
 
         return history
 
