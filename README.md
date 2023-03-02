@@ -9,7 +9,7 @@ This repository contains the code for building an Image Captioning model using D
 - ``model.py`` : The architecture of model. The model initially takes image input and extracts the features, which is later fed to LSTM layer along with processed captions.
 - ``batch_loader.py`` : It loads all the image data along with caption with their respective targets in batches and yeilds a generator output.
 - ``train.py`` : The training of the model happens here. The input is given from another script ``config.py``.
-- ``inference.py`` : The caption generator code is here. Follow the below steps to generate captions for your own image
+- ``inference.py`` : The caption generator code is here. Follow the below steps to generate captions for your own image.
 
 ### Getting Started
 1. Clone the repository
