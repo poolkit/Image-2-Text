@@ -3,7 +3,7 @@ Image Captioning is the process of generating textual descriptions of an image. 
 
 This repository contains the code for building an Image Captioning model using Deep Learning. The model is trained on the Flickr30k dataset which contains a large collection of images with corresponding textual descriptions. The model is built using a Convolutional Neural Network (CNN) to extract features from the images and a Recurrent Neural Network (RNN) to generate the textual descriptions.
 
-### Code Explaination
+### Code Explanation
 - ``text_processor.py`` : This script takes captions csv file and processes the captions as required by the model.
 - ``image_processor.py`` : It creates a dictionary of image filenames mapped with their respective image feature vectors extracted from pre trained vgg16 or resnet50.
 - ``model.py`` : The architecture of model. The model initially takes image input and extracts the features, which is later fed to LSTM layer along with processed captions.
