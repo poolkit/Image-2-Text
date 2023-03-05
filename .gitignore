@@ -4,3 +4,4 @@ utils/__pycache__/
 models/__pycache__/
 data/test/
 results/
+__pycache__/

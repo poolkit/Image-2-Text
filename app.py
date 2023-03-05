@@ -13,4 +13,4 @@ async def read_item(id: int, image: UploadFile = File(...)):
     return {"item_id": id, "item_image_name": image.filename}
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='127.0.0.1', port=5000) 
+    uvicorn.run(app, host='127.0.0.1', port=8000) 
