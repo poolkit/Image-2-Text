@@ -67,15 +67,15 @@ if __name__ == '__main__':
 
     test_image_path = args.test_image
     generated_caption  = generate_captions(test_image_path)
-    filename = test_image_path.split('/')[-1]
 
     try:
         test_image = Image.open(test_image_path)
     except:
-        filename = "image.jpg"
+        filename = "data/test/image.jpg"
         urllib.request.urlretrieve(test_image_path,filename)
         test_image = Image.open(filename)
 
+    filename = test_image_path.split('/')[-1]
     plt.imshow(test_image)
     plt.title(generated_caption)
     plt.savefig(f'{args.output_folder}{filename}')
