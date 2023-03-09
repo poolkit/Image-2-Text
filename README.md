@@ -33,7 +33,10 @@ python train.py
 ```
 
 5. Finally, to generate captions for your test images, run
-
+```sh
+python inference.py  --t "test image filepath"
+```
+or
 ```sh
 python inference.py  --t "test image filepath"  --o "output folder filepath" --m "saved model path"
 ```
