@@ -12,6 +12,9 @@ from keras.preprocessing.sequence import pad_sequences
 import matplotlib.pyplot as plt
 from PIL import Image
 import argparse
+import requests
+from io import BytesIO
+import urllib.request
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', dest='test_image', type=str, help='test image file path')
@@ -20,6 +23,10 @@ parser.add_argument('--m', dest='model_choice', type=str, help='pre trained mode
 args = parser.parse_args()
 
 loaded_model = load_model(args.model_choice)
+if 'vgg16' in args.model_choice:
+    TRANSFER_MODEL = 'vgg16'
+else:
+    TRANSFER_MODEL = 'resnet50'
 
 with open('saved/objects.pkl', 'rb') as f:  # Python 3: open(..., 'rb')
     word_to_id, id_to_word = pickle.load(f)
@@ -29,7 +36,13 @@ def generate_captions(filepath):
     image_class = ImageProcessor(TRANSFER_MODEL, IMAGE_SHAPE, TEST_DIR)
     image_model = image_class.image_model
 
-    image = load_img(filepath, target_size=(224, 224))
+    try:
+        image = load_img(filepath, target_size=(224, 224))
+    except:
+        response = requests.get(filepath)
+        image = Image.open(BytesIO(response.content))
+        image = image.resize((224, 224))
+
     img_array = img_to_array(image)
     img_array = np.expand_dims(img_array, axis=0)
     img_array = preprocess_input(img_array)
@@ -53,9 +66,16 @@ def generate_captions(filepath):
 if __name__ == '__main__':
 
     test_image_path = args.test_image
-    filename = test_image_path.split('/')[-1]
     generated_caption  = generate_captions(test_image_path)
-    test_image = Image.open(test_image_path)
+    filename = test_image_path.split('/')[-1]
+
+    try:
+        test_image = Image.open(test_image_path)
+    except:
+        filename = "image.jpg"
+        urllib.request.urlretrieve(test_image_path,filename)
+        test_image = Image.open(filename)
+
     plt.imshow(test_image)
     plt.title(generated_caption)
     plt.savefig(f'{args.output_folder}{filename}')

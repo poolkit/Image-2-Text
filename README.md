@@ -26,7 +26,7 @@ git clone https://github.com/poolkit/Image-2-Text.git
 pip install requirements.txt
 ```
 
-4. To train the model, just run. It will save your model in ``saved/`` folder.
+4. To train the model, just run. It will save your model in ``saved/`` folder. (resnet50 gave better accuracy btw)
 
 ```sh
 python train.py
