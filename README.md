@@ -10,6 +10,7 @@ This repository contains the code for building an Image Captioning model using D
 - ``batch_loader.py`` : It loads all the image data along with caption with their respective targets in batches and yeilds a generator output.
 - ``train.py`` : The training of the model happens here. The input is given from another script ``config.py``.
 - ``inference.py`` : The caption generator code is here. Follow the below steps to generate captions for your own image.
+- ``app.py`` : This is a FastAPI endpoint script that allows you to provide a url to generate captions.
 
 ### Getting Started
 1. Clone the repository
@@ -40,6 +41,12 @@ or
 ```sh
 python inference.py  --t "test image filepath"  --o "output folder filepath" --m "saved model path"
 ```
+
+6. To get results from an API endpoint, run
+```sh
+python app.py
+```
+All you need to do is paste the url of the image you wanna test.
 
 ### Results
 <img src="results/image1.jpg" width=500px height=300px> <img src="results/image5.jpg" width=500px height=300px>
